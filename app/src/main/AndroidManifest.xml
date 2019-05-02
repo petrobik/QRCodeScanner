@@ -16,7 +16,10 @@
         <activity android:name="com.bikshanov.qrcodescanner.ScanResultActivity"></activity>
         <activity android:name="com.bikshanov.qrcodescanner.MainActivity" />
         <activity android:name="com.bikshanov.qrcodescanner.ResultActivity" />
-        <activity android:name="com.bikshanov.qrcodescanner.CustomScannerActivity" />
+        <activity android:name="com.bikshanov.qrcodescanner.CustomScannerActivity"
+            android:screenOrientation="fullSensor"
+            android:stateNotNeeded="true"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity android:name="com.bikshanov.qrcodescanner.Main2Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

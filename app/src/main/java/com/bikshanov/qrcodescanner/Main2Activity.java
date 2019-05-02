@@ -19,6 +19,7 @@ import com.google.zxing.client.result.ParsedResult;
 import com.google.zxing.client.result.ResultParser;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.journeyapps.barcodescanner.BarcodeResult;
 
 public class Main2Activity extends AppCompatActivity {
 
@@ -55,10 +56,16 @@ public class Main2Activity extends AppCompatActivity {
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IntentIntegrator integrator = new IntentIntegrator(Main2Activity.this);
-                integrator.setBarcodeImageEnabled(true);
-                integrator.setOrientationLocked(false);
-                integrator.initiateScan();
+//                IntentIntegrator integrator = new IntentIntegrator(Main2Activity.this);
+//                integrator.setBarcodeImageEnabled(true);
+//                integrator.setOrientationLocked(false);
+//                integrator.initiateScan();
+
+                new IntentIntegrator(Main2Activity.this)
+                        .setOrientationLocked(false)
+                        .setBarcodeImageEnabled(true)
+                        .setCaptureActivity(CustomScannerActivity.class)
+                        .initiateScan();
             }
         });
     }
