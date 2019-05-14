@@ -3,6 +3,10 @@ package com.bikshanov.qrcodescanner;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,11 +25,16 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.journeyapps.barcodescanner.BarcodeResult;
 
+import java.util.List;
+
 public class Main2Activity extends AppCompatActivity {
 
     private BottomNavigationView mBottomNavigationView;
     private Snackbar mSnackbar;
     private FloatingActionButton mFab;
+    private CodeViewModel mCodeViewModel;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,19 +47,23 @@ public class Main2Activity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.navigation_history:
-                        mSnackbar = Snackbar.make(findViewById(R.id.main_layout), item.getTitle().toString() + " checked", Snackbar.LENGTH_SHORT);
-                        mSnackbar.setAnchorView(R.id.fab);
-                        mSnackbar.show();
+//                        mSnackbar = Snackbar.make(findViewById(R.id.main_layout), item.getTitle().toString() + " checked", Snackbar.LENGTH_SHORT);
+//                        mSnackbar.setAnchorView(R.id.fab);
+//                        mSnackbar.show();
+                        loadFragment(new HistoryFragment());
                         return true;
                     case R.id.navigation_settings:
-                        mSnackbar = Snackbar.make(findViewById(R.id.main_layout), item.getTitle().toString() + " checked", Snackbar.LENGTH_SHORT);
-                        mSnackbar.setAnchorView(R.id.fab);
-                        mSnackbar.show();
+//                        mSnackbar = Snackbar.make(findViewById(R.id.main_layout), item.getTitle().toString() + " checked", Snackbar.LENGTH_SHORT);
+//                        mSnackbar.setAnchorView(R.id.fab);
+//                        mSnackbar.show();
+                        loadFragment(new SettingsFragment());
                         return true;
                 }
                 return false;
             }
         });
+
+        mCodeViewModel = ViewModelProviders.of(this).get(CodeViewModel.class);
 
         mFab = findViewById(R.id.fab);
         mFab.setOnClickListener(new View.OnClickListener() {
@@ -68,6 +81,10 @@ public class Main2Activity extends AppCompatActivity {
                         .initiateScan();
             }
         });
+
+        if (savedInstanceState == null) {
+            loadFragment(new HistoryFragment());
+        }
     }
 
     @Override
@@ -82,6 +99,7 @@ public class Main2Activity extends AppCompatActivity {
 //                mResultTextView.setText(result.getContents());
                 String scanResult = parsedResult.getDisplayResult();
                 String imagePath = result.getBarcodeImagePath();
+                String format = parsedResult.getType().toString();
 //                mResultTextView.setText(parsedResult.getDisplayResult());
 //                mTypeTextView.setText(parsedResult.getType().toString());
 //                Bitmap codeBitmap = BitmapFactory.decodeFile(result.getBarcodeImagePath());
@@ -90,6 +108,7 @@ public class Main2Activity extends AppCompatActivity {
                 Intent intent = new Intent(Main2Activity.this, ScanResultActivity.class);
                 intent.putExtra("ScanResult", scanResult);
                 intent.putExtra("ImagePath", imagePath);
+                intent.putExtra("Format", format);
 
 //                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 //                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
@@ -98,9 +117,19 @@ public class Main2Activity extends AppCompatActivity {
 //                }
 
                 startActivity(intent);
+
+                Code code = new Code(scanResult, format);
+                mCodeViewModel.insert(code);
+
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    private void loadFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.commit();
     }
 }

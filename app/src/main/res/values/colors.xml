@@ -3,4 +3,5 @@
     <color name="colorPrimary">#3A454F</color>
     <color name="colorPrimaryDark">#3A454F</color>
     <color name="colorSecondary">#16C591</color>
+    <color name="resultPoints">#62F9C1</color>
 </resources>

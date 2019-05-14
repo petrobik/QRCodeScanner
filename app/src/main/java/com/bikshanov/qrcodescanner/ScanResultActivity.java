@@ -12,7 +12,8 @@ import android.widget.TextView;
 public class ScanResultActivity extends AppCompatActivity {
 
     private TextView mScanResultTextView;
-    private ImageView mScanResultImageVIew;
+    private ImageView mScanResultImageView;
+    private TextView mResultFormatTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,11 +21,13 @@ public class ScanResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_scan_result);
 
         mScanResultTextView = findViewById(R.id.scan_result_textView);
-        mScanResultImageVIew = findViewById(R.id.scan_result_imageView);
+        mScanResultImageView = findViewById(R.id.scan_result_imageView);
+        mResultFormatTextView = findViewById(R.id.result_format_text_view);
 
         Intent intent = getIntent();
         mScanResultTextView.setText(intent.getStringExtra("ScanResult"));
+        mResultFormatTextView.setText(intent.getStringExtra("Format"));
         Bitmap codeBitmap = BitmapFactory.decodeFile(intent.getStringExtra("ImagePath"));
-        mScanResultImageVIew.setImageBitmap(codeBitmap);
+        mScanResultImageView.setImageBitmap(codeBitmap);
     }
 }
