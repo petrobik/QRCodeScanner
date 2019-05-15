@@ -24,6 +24,7 @@ public class CustomScannerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.scan_activity_title);
         setContentView(R.layout.activity_custom_scanner);
 
         mBarcodeScannerView = findViewById(R.id.zxing_barcode_scanner);

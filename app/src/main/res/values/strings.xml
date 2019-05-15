@@ -4,6 +4,11 @@
     <string name="title_history">History</string>
     <string name="title_settings">Settings</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="settings_fragment_title">Settings</string>
+    <string name="history_fragment_title">History</string>
+    <string name="item_deleted">History item deleted</string>
+    <string name="clear_history">Clear history</string>
+    <string name="scan_result_activity_title">Scan Result</string>
+    <string name="scan_activity_title">Scan Code</string>
+
 </resources>

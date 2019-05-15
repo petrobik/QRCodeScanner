@@ -17,6 +17,7 @@ public class ScanResultActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTitle(R.string.scan_result_activity_title);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_result);
 

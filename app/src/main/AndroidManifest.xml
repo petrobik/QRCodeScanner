@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="com.bikshanov.qrcodescanner.ScanResultActivity"></activity>
+        <activity android:name="com.bikshanov.qrcodescanner.ScanResultActivity"
+            android:parentActivityName=".Main2Activity"></activity>
         <activity android:name="com.bikshanov.qrcodescanner.MainActivity" />
         <activity android:name="com.bikshanov.qrcodescanner.ResultActivity" />
         <activity android:name="com.bikshanov.qrcodescanner.CustomScannerActivity"
@@ -30,7 +31,8 @@
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"
-            tools:replace="screenOrientation" />
+            tools:replace="screenOrientation"
+            android:parentActivityName=".Main2Activity"/>
     </application>
 
 </manifest>

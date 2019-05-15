@@ -41,6 +41,10 @@ public class CodeAdapter extends RecyclerView.Adapter<CodeAdapter.CodeHolder> {
         notifyDataSetChanged();
     }
 
+    public Code getCodeAt(int position) {
+        return codes.get(position);
+    }
+
     class CodeHolder extends RecyclerView.ViewHolder {
         private TextView mCodeTextView;
         private TextView mFormatTextView;
