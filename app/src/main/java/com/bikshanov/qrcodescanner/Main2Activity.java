@@ -35,7 +35,6 @@ public class Main2Activity extends AppCompatActivity {
     private CodeViewModel mCodeViewModel;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,12 +93,66 @@ public class Main2Activity extends AppCompatActivity {
             if (result.getContents() == null) {
                 Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
             } else {
-                Result res = new Result(result.getContents(), null, null, BarcodeFormat.QR_CODE);
+                BarcodeFormat barcodeFormat = BarcodeFormat.QR_CODE;
+
+                switch (result.getFormatName()) {
+                    case "AZTEC":
+                        barcodeFormat = BarcodeFormat.AZTEC;
+                        break;
+                    case "CODABAR":
+                        barcodeFormat = BarcodeFormat.CODABAR;
+                        break;
+                    case "CODE_128":
+                        barcodeFormat = BarcodeFormat.CODE_128;
+                        break;
+                    case "CODE_39":
+                        barcodeFormat = BarcodeFormat.CODE_39;
+                        break;
+                    case "CODE_93":
+                        barcodeFormat = BarcodeFormat.CODE_93;
+                        break;
+                    case "DATA_MATRIX":
+                        barcodeFormat = BarcodeFormat.DATA_MATRIX;
+                        break;
+                    case "EAN_13":
+                        barcodeFormat = BarcodeFormat.EAN_13;
+                        break;
+                    case "EAN_8":
+                        barcodeFormat = BarcodeFormat.EAN_8;
+                        break;
+                    case "ITF":
+                        barcodeFormat = BarcodeFormat.ITF;
+                        break;
+                    case "MAXICODE":
+                        barcodeFormat = BarcodeFormat.MAXICODE;
+                        break;
+                    case "PDF_417":
+                        barcodeFormat = BarcodeFormat.PDF_417;
+                        break;
+                    case "QR_CODE":
+                        barcodeFormat = BarcodeFormat.QR_CODE;
+                        break;
+                    case "RSS_14":
+                        barcodeFormat = BarcodeFormat.RSS_14;
+                        break;
+                    case "RSS_EXPANDED":
+                        barcodeFormat = BarcodeFormat.RSS_EXPANDED;
+                        break;
+                    case "UPC_A":
+                        barcodeFormat = BarcodeFormat.UPC_A;
+                        break;
+                    case "UPC_E":
+                        barcodeFormat = BarcodeFormat.UPC_E;
+                        break;
+                }
+
+                Result res = new Result(result.getContents(), null, null, barcodeFormat);
                 ParsedResult parsedResult = ResultParser.parseResult(res);
 //                mResultTextView.setText(result.getContents());
                 String scanResult = parsedResult.getDisplayResult();
                 String imagePath = result.getBarcodeImagePath();
-                String format = parsedResult.getType().toString();
+                String format = result.getFormatName();
+                String type = parsedResult.getType().toString();
 //                mResultTextView.setText(parsedResult.getDisplayResult());
 //                mTypeTextView.setText(parsedResult.getType().toString());
 //                Bitmap codeBitmap = BitmapFactory.decodeFile(result.getBarcodeImagePath());
@@ -109,6 +162,7 @@ public class Main2Activity extends AppCompatActivity {
                 intent.putExtra("ScanResult", scanResult);
                 intent.putExtra("ImagePath", imagePath);
                 intent.putExtra("Format", format);
+                intent.putExtra("Type", type);
 
 //                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 //                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());

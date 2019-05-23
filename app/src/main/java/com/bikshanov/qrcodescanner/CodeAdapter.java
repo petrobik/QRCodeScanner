@@ -1,5 +1,6 @@
 package com.bikshanov.qrcodescanner;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +55,19 @@ public class CodeAdapter extends RecyclerView.Adapter<CodeAdapter.CodeHolder> {
             super(itemView);
             mCodeTextView = itemView.findViewById(R.id.code_text_view);
             mFormatTextView = itemView.findViewById(R.id.format_text_view);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    Code code = codes.get(position);
+                    Intent intent = new Intent(v.getContext(), ScanResultActivity.class);
+                    intent.putExtra("ScanResult", code.getCode());
+//                    intent.putExtra("ImagePath", imagePath);
+                    intent.putExtra("Format", code.getFormat());
+                    v.getContext().startActivity(intent);
+                }
+            });
 //            mDateTextView = itemView.findViewById(R.id.date_text_view);
         }
     }

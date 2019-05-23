@@ -20,7 +20,8 @@
         <activity android:name="com.bikshanov.qrcodescanner.CustomScannerActivity"
             android:screenOrientation="fullSensor"
             android:stateNotNeeded="true"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:parentActivityName=".Main2Activity"/>
         <activity android:name="com.bikshanov.qrcodescanner.Main2Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,8 +32,7 @@
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"
-            tools:replace="screenOrientation"
-            android:parentActivityName=".Main2Activity"/>
+            tools:replace="screenOrientation" />
     </application>
 
 </manifest>
