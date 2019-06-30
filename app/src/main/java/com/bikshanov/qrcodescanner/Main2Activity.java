@@ -21,6 +21,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 import com.google.zxing.client.result.ParsedResult;
 import com.google.zxing.client.result.ResultParser;
+import com.google.zxing.client.result.SMSParsedResult;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.journeyapps.barcodescanner.BarcodeResult;
@@ -93,63 +94,14 @@ public class Main2Activity extends AppCompatActivity {
             if (result.getContents() == null) {
                 Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
             } else {
-                BarcodeFormat barcodeFormat = BarcodeFormat.QR_CODE;
 
-                switch (result.getFormatName()) {
-                    case "AZTEC":
-                        barcodeFormat = BarcodeFormat.AZTEC;
-                        break;
-                    case "CODABAR":
-                        barcodeFormat = BarcodeFormat.CODABAR;
-                        break;
-                    case "CODE_128":
-                        barcodeFormat = BarcodeFormat.CODE_128;
-                        break;
-                    case "CODE_39":
-                        barcodeFormat = BarcodeFormat.CODE_39;
-                        break;
-                    case "CODE_93":
-                        barcodeFormat = BarcodeFormat.CODE_93;
-                        break;
-                    case "DATA_MATRIX":
-                        barcodeFormat = BarcodeFormat.DATA_MATRIX;
-                        break;
-                    case "EAN_13":
-                        barcodeFormat = BarcodeFormat.EAN_13;
-                        break;
-                    case "EAN_8":
-                        barcodeFormat = BarcodeFormat.EAN_8;
-                        break;
-                    case "ITF":
-                        barcodeFormat = BarcodeFormat.ITF;
-                        break;
-                    case "MAXICODE":
-                        barcodeFormat = BarcodeFormat.MAXICODE;
-                        break;
-                    case "PDF_417":
-                        barcodeFormat = BarcodeFormat.PDF_417;
-                        break;
-                    case "QR_CODE":
-                        barcodeFormat = BarcodeFormat.QR_CODE;
-                        break;
-                    case "RSS_14":
-                        barcodeFormat = BarcodeFormat.RSS_14;
-                        break;
-                    case "RSS_EXPANDED":
-                        barcodeFormat = BarcodeFormat.RSS_EXPANDED;
-                        break;
-                    case "UPC_A":
-                        barcodeFormat = BarcodeFormat.UPC_A;
-                        break;
-                    case "UPC_E":
-                        barcodeFormat = BarcodeFormat.UPC_E;
-                        break;
-                }
+                BarcodeFormat barcodeFormat = Utils.getBarcodeFormat(result.getFormatName());
 
                 Result res = new Result(result.getContents(), null, null, barcodeFormat);
                 ParsedResult parsedResult = ResultParser.parseResult(res);
 //                mResultTextView.setText(result.getContents());
-                String scanResult = parsedResult.getDisplayResult();
+//                String scanResult = parsedResult.getDisplayResult();
+                String scanResult = result.getContents();
                 String imagePath = result.getBarcodeImagePath();
                 String format = result.getFormatName();
                 String type = parsedResult.getType().toString();
@@ -170,10 +122,12 @@ public class Main2Activity extends AppCompatActivity {
 //                    startActivity(intent);
 //                }
 
-                startActivity(intent);
-
-                Code code = new Code(scanResult, format);
+                Code code = new Code(scanResult, format, type);
                 mCodeViewModel.insert(code);
+
+                intent.putExtra("ID", code.getId());
+
+                startActivity(intent);
 
             }
         } else {

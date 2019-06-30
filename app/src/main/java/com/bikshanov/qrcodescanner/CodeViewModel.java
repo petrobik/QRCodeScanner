@@ -38,4 +38,8 @@ public class CodeViewModel extends AndroidViewModel {
     public LiveData<List<Code>> getAllCodes() {
         return allCodes;
     }
+
+    public LiveData<Code> getCodeById(int id) {
+        return repository.getCodeById(id);
+    }
 }

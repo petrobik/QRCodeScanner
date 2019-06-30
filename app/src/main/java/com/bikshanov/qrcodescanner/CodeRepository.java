@@ -38,6 +38,10 @@ public class CodeRepository {
         return allCodes;
     }
 
+    public LiveData<Code> getCodeById(int id) {
+        return codeDao.getCodeById(id);
+    }
+
     private static class InsertCodeAsyncTask extends AsyncTask<Code, Void, Void> {
 
         private CodeDao codeDao;

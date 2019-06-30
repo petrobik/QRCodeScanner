@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -27,8 +28,46 @@ public class CodeAdapter extends RecyclerView.Adapter<CodeAdapter.CodeHolder> {
     @Override
     public void onBindViewHolder(@NonNull CodeHolder holder, int position) {
         Code currentCode = codes.get(position);
-        holder.mCodeTextView.setText(currentCode.getCode());
+//        holder.mCodeTextView.setText(currentCode.getCode());
+        holder.mCodeTextView.setText(Utils.getParsedResult(currentCode.getCode(),
+                Utils.getBarcodeFormat(currentCode.getFormat())).getDisplayResult());
         holder.mFormatTextView.setText(currentCode.getFormat());
+
+        switch (currentCode.getType()) {
+            case "ADDRESSBOOK":
+                holder.mCodeTypeImageView.setImageResource(R.drawable.ic_addressbook);
+                break;
+            case "EMAIL_ADDRESS":
+                holder.mCodeTypeImageView.setImageResource(R.drawable.ic_email);
+                break;
+            case "PRODUCT":
+                holder.mCodeTypeImageView.setImageResource(R.drawable.ic_barcode);
+                break;
+            case "URI":
+                holder.mCodeTypeImageView.setImageResource(R.drawable.ic_url);
+                break;
+            case "WIFI":
+                holder.mCodeTypeImageView.setImageResource(R.drawable.ic_wifi);
+                break;
+            case "GEO":
+                holder.mCodeTypeImageView.setImageResource(R.drawable.ic_geo);
+                break;
+            case "TEL":
+                holder.mCodeTypeImageView.setImageResource(R.drawable.ic_phone);
+                break;
+            case "SMS":
+                holder.mCodeTypeImageView.setImageResource(R.drawable.ic_sms);
+                break;
+            case "CALENDAR":
+                holder.mCodeTypeImageView.setImageResource(R.drawable.ic_calendar);
+                break;
+            case "ISBN":
+                holder.mCodeTypeImageView.setImageResource(R.drawable.ic_book);
+                break;
+            default:
+                holder.mCodeTypeImageView.setImageResource(R.drawable.ic_text);
+                break;
+        }
 //        holder.mDateTextView.setText(currentCode.getDate().toString());
     }
 
@@ -49,22 +88,27 @@ public class CodeAdapter extends RecyclerView.Adapter<CodeAdapter.CodeHolder> {
     class CodeHolder extends RecyclerView.ViewHolder {
         private TextView mCodeTextView;
         private TextView mFormatTextView;
+        private ImageView mCodeTypeImageView;
 //        private TextView mDateTextView;
 
         public CodeHolder(@NonNull View itemView) {
             super(itemView);
             mCodeTextView = itemView.findViewById(R.id.code_text_view);
             mFormatTextView = itemView.findViewById(R.id.format_text_view);
+            mCodeTypeImageView = itemView.findViewById(R.id.code_type_image_view);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
                     Code code = codes.get(position);
+
                     Intent intent = new Intent(v.getContext(), ScanResultActivity.class);
                     intent.putExtra("ScanResult", code.getCode());
 //                    intent.putExtra("ImagePath", imagePath);
                     intent.putExtra("Format", code.getFormat());
+                    intent.putExtra("Type", code.getType());
+                    intent.putExtra("ID", code.getId());
                     v.getContext().startActivity(intent);
                 }
             });

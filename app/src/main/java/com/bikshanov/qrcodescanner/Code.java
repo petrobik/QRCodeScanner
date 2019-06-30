@@ -15,15 +15,24 @@ public class Code {
 
     private String format;
 
+    private String type;
+
     public void setDate(Date date) {
         this.date = date;
     }
 
     private Date date;
 
-    public Code(String code, String format) {
+//    public Code(String code, String format) {
+//        this.code = code;
+//        this.format = format;
+//        date = new Date();
+//    }
+
+    public Code(String code, String format, String type) {
         this.code = code;
         this.format = format;
+        this.type = type;
         date = new Date();
     }
 
@@ -41,6 +50,10 @@ public class Code {
 
     public String getFormat() {
         return format;
+    }
+
+    public String getType() {
+        return type;
     }
 
     public Date getDate() {

@@ -14,7 +14,7 @@
     <string name="clear">Clear</string>
     <string name="cancel">Cancel</string>
     <string name="clear_history_message">This will delete all your scan results history.</string>
-    <string name="format">Format:</string>
-    <string name="type">Type:</string>
+    <string name="format">Format: </string>
+    <string name="type">Type: </string>
 
 </resources>

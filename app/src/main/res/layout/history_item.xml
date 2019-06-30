@@ -22,11 +22,22 @@
             <!--android:layout_centerVertical="true"-->
             <!--android:text="Date"/>-->
 
+        <ImageView
+            android:id="@+id/code_type_image_view"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:srcCompat="@drawable/ic_qr"
+            android:tint="@color/colorPrimary"
+            android:layout_alignParentStart="true"
+            android:layout_marginEnd="8dp"
+            android:layout_centerVertical="true"/>
+
         <TextView
             android:id="@+id/code_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
+            android:layout_toRightOf="@id/code_type_image_view"
+            android:maxLines="1"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
             android:text="Text"/>
 
@@ -36,6 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/code_text_view"
             android:layout_marginTop="4dp"
+            android:layout_toRightOf="@id/code_type_image_view"
             android:text="Format"/>
 
     </RelativeLayout>

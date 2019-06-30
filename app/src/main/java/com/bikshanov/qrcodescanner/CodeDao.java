@@ -26,4 +26,7 @@ public interface CodeDao {
 
     @Query("SELECT * FROM code_table ORDER BY date DESC")
     LiveData<List<Code>> getAllCodes();
+
+    @Query("SELECT * FROM code_table WHERE id = :id")
+    LiveData<Code> getCodeById(int id);
 }
