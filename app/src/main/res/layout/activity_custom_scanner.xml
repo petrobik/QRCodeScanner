@@ -11,15 +11,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:zxing_scanner_layout="@layout/custom_scanner"
-        />
+        android:layout_centerHorizontal="true" />
 
-    <Button
+    <ImageButton
         android:id="@+id/switch_flashlight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Flashlight"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        />
+        app:srcCompat="@drawable/ic_flash_on"
+        android:background="?attr/selectableItemBackground"
+        android:padding="4dp"
+        android:layout_marginTop="16dp"/>
 
 </RelativeLayout>

@@ -4,6 +4,8 @@
     package="com.bikshanov.qrcodescanner">
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
 
     <application
         android:allowBackup="true"
@@ -15,7 +17,6 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name="com.bikshanov.qrcodescanner.ScanResultActivity"
             android:parentActivityName=".Main2Activity"></activity>
-        <activity android:name="com.bikshanov.qrcodescanner.MainActivity" />
         <activity android:name="com.bikshanov.qrcodescanner.ResultActivity" />
         <activity android:name="com.bikshanov.qrcodescanner.CustomScannerActivity"
             android:screenOrientation="fullSensor"
@@ -25,7 +26,6 @@
         <activity android:name="com.bikshanov.qrcodescanner.Main2Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

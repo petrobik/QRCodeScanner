@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AnotherQRCodeScanner</string>
+    <string name="app_name">QR Code Scanner</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_history">History</string>
     <string name="title_settings">Settings</string>
@@ -16,5 +16,30 @@
     <string name="clear_history_message">This will delete all your scan results history.</string>
     <string name="format">Format: </string>
     <string name="type">Type: </string>
+    
+    <string name="product_search_button">Product Search</string>
+    <string name="book_search_button">Book Search</string>
+    <string name="open_browser_button">Open in browser</string>
+    <string name="send_sms_button">Send SMS</string>
+    <string name="search_button">Web search</string>
+    <string name="dial_button">Dial number</string>
+    <string name="send_email_button">Send email</string>
+    <string name="add_contact_button">Add contact</string>
+    <string name="add_event_button">Add to calendar</string>
+    <string name="connect_wifi_button">Connect to network</string>
+    <string name="show_map_button">Show map</string>
+    <string name="share_button">Share</string>
+
+    <string name="wifi_changing_network">Requesting connection to network\u2026</string>
+
+    <string name="turn_on_flashlight">On</string>
+    <string name="turn_off_flashlight">Off</string>
+
+    <string name="preferences_code_find_title">When a barcode is found\u2026</string>
+    <string name="preferences_general_title">General settings</string>
+    <string name="preferences_clipboard">Copy to clipboard</string>
+    <string name="preferences_beep">Beep</string>
+    <string name="preferences_auto_focus">Use auto focus</string>
+
 
 </resources>

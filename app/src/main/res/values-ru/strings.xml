@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">QR Code Scanner</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_history">История</string>
+    <string name="title_settings">Настройки</string>
+
+    <string name="settings_fragment_title">Настройки</string>
+    <string name="history_fragment_title">История</string>
+    <string name="item_deleted">History item deleted</string>
+    <string name="clear_history">Очистить историю</string>
+    <string name="scan_result_activity_title">Результат сканирования</string>
+    <string name="scan_activity_title">Сканировать код</string>
+    <string name="history_cleared">История очищена</string>
+    <string name="clear">Очистить</string>
+    <string name="cancel">Отмена</string>
+    <string name="clear_history_message">Очистить историю сканирований?</string>
+    <string name="format">Формат: </string>
+    <string name="type">Тип: </string>
+
+    <string name="product_search_button">Поиск товара</string>
+    <string name="book_search_button">Поиск книги</string>
+    <string name="open_browser_button">Открыть ссылку</string>
+    <string name="send_sms_button">Отправить СМС</string>
+    <string name="search_button">Поиск в интернете</string>
+    <string name="dial_button">Набрать номер</string>
+    <string name="send_email_button">Отправить e-mail</string>
+    <string name="add_contact_button">Добавить контакт</string>
+    <string name="add_event_button">Добавить в календарь</string>
+    <string name="connect_wifi_button">Подключиться</string>
+    <string name="show_map_button">Показать карту</string>
+    <string name="share_button">Поделиться</string>
+
+    <string name="wifi_changing_network">Запрос подключения к сети\u2026</string>
+
+    <string name="turn_on_flashlight">On</string>
+    <string name="turn_off_flashlight">Off</string>
+
+    <string name="preferences_code_find_title">Когда штрих-код найден\u2026</string>
+    <string name="preferences_general_title">Основные настройки</string>
+    <string name="preferences_clipboard">Копировать в буфер обмена</string>
+    <string name="preferences_beep">Звуковой сигнал</string>
+    <string name="preferences_auto_focus">Использовать автофокус</string>
+
+</resources>

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "513274341350",
+    "firebase_url": "https://qrcodescanner-c5017.firebaseio.com",
+    "project_id": "qrcodescanner-c5017",
+    "storage_bucket": "qrcodescanner-c5017.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:513274341350:android:d9d53523a37742fa",
+        "android_client_info": {
+          "package_name": "com.bikshanov.qrcodescanner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "513274341350-4qp4a6aje29nhtpumecbvjiedpouku2i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNTcylqU4UQqSKU7WmTA2XhQ1Fy6UdNZk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "513274341350-4qp4a6aje29nhtpumecbvjiedpouku2i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

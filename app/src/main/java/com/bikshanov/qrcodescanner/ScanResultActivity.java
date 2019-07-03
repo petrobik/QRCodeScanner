@@ -1,42 +1,42 @@
 package com.bikshanov.qrcodescanner;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.wifi.WifiManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProviders;
 
-import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 import com.google.zxing.client.result.AddressBookParsedResult;
 import com.google.zxing.client.result.CalendarParsedResult;
 import com.google.zxing.client.result.EmailAddressParsedResult;
 import com.google.zxing.client.result.ExpandedProductParsedResult;
+import com.google.zxing.client.result.GeoParsedResult;
+import com.google.zxing.client.result.ISBNParsedResult;
 import com.google.zxing.client.result.ParsedResult;
 import com.google.zxing.client.result.ProductParsedResult;
 import com.google.zxing.client.result.ResultParser;
 import com.google.zxing.client.result.SMSParsedResult;
 import com.google.zxing.client.result.TelParsedResult;
 import com.google.zxing.client.result.URIParsedResult;
-import com.journeyapps.barcodescanner.Util;
+import com.google.zxing.client.result.WifiParsedResult;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ScanResultActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private CodeViewModel mCodeViewModel;
-
-    private TextView mScanResultTextView;
-    private ImageView mScanResultImageView;
-    private TextView mResultFormatTextView;
-    private TextView mResultTypeTextView;
+    private static final String TAG = "ScanResultActivity";
 
     String mResult;
     String mResultFormat;
@@ -53,12 +53,10 @@ public class ScanResultActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_result);
 
-        mCodeViewModel = ViewModelProviders.of(this).get(CodeViewModel.class);
-
-        mScanResultTextView = findViewById(R.id.scan_result_text_view);
-        mScanResultImageView = findViewById(R.id.scan_result_image_view);
-        mResultFormatTextView = findViewById(R.id.result_format_text_view);
-        mResultTypeTextView = findViewById(R.id.result_type_text_view);
+        TextView scanResultTextView = findViewById(R.id.scan_result_text_view);
+        ImageView scanResultImageView = findViewById(R.id.scan_result_image_view);
+        TextView resultFormatTextView = findViewById(R.id.result_format_text_view);
+        TextView resultTypeTextView = findViewById(R.id.result_type_text_view);
 
         Button searchProductButton = findViewById(R.id.product_search_button);
         Button openBrowserButton = findViewById(R.id.open_browser_button);
@@ -69,6 +67,8 @@ public class ScanResultActivity extends AppCompatActivity implements View.OnClic
         Button sendEmailButton = findViewById(R.id.send_email_button);
         Button addContactButton = findViewById(R.id.add_contact_button);
         Button addEventButton = findViewById(R.id.add_event_button);
+        Button connectWifiButton = findViewById(R.id.connect_wifi_button);
+        Button showMapButton = findViewById(R.id.show_map_button);
 
         searchProductButton.setOnClickListener(this);
         searchButton.setOnClickListener(this);
@@ -78,6 +78,8 @@ public class ScanResultActivity extends AppCompatActivity implements View.OnClic
         dialButton.setOnClickListener(this);
         sendEmailButton.setOnClickListener(this);
         addEventButton.setOnClickListener(this);
+        connectWifiButton.setOnClickListener(this);
+        showMapButton.setOnClickListener(this);
 
         Intent intent = getIntent();
         mResult = intent.getStringExtra("ScanResult");
@@ -86,17 +88,6 @@ public class ScanResultActivity extends AppCompatActivity implements View.OnClic
 
         mCodeId = intent.getIntExtra("ID", -1);
 
-//        mCodeViewModel.getCodeById(mCodeId).observe(this, new Observer<Code>() {
-//            @Override
-//            public void onChanged(Code code) {
-//                mResult = code.getCode();
-//                mResultFormat = code.getFormat();
-//                mResultType = code.getType();
-//            }
-//        });
-
-//        BarcodeFormat barcodeFormat = Utils.getBarcodeFormat(mResultFormat);
-//
         Result result = new Result(mResult, null, null,
                 Utils.getBarcodeFormat(mResultFormat));
         mParsedResult = ResultParser.parseResult(result);
@@ -112,10 +103,13 @@ public class ScanResultActivity extends AppCompatActivity implements View.OnClic
         mButtons.add(sendEmailButton);
         mButtons.add(addContactButton);
         mButtons.add(addEventButton);
+        mButtons.add(connectWifiButton);
+        mButtons.add(showMapButton);
 
         switch (mResultType) {
             case "PRODUCT":
                 setButtonsVisibility(searchProductButton);
+                searchProductButton.setText(getResources().getString(R.string.product_search_button));
                 break;
             case "URI":
                 setButtonsVisibility(openBrowserButton);
@@ -123,8 +117,9 @@ public class ScanResultActivity extends AppCompatActivity implements View.OnClic
             case "SMS":
                 setButtonsVisibility(sendSmsButton);
                 break;
-            case "TEXT":
-                setButtonsVisibility(searchButton);
+            case "ISBN":
+                setButtonsVisibility(searchProductButton);
+                searchProductButton.setText(getResources().getString(R.string.book_search_button));
                 break;
             case "TEL":
                 setButtonsVisibility(dialButton);
@@ -138,19 +133,26 @@ public class ScanResultActivity extends AppCompatActivity implements View.OnClic
             case "CALENDAR":
                 setButtonsVisibility(addEventButton);
                 break;
+            case "WIFI":
+                setButtonsVisibility(connectWifiButton);
+                break;
+            case "GEO":
+                setButtonsVisibility(showMapButton);
+                break;
+            default:
+                setButtonsVisibility(searchButton);
         }
 
-//        mScanResultTextView.setText(mResult);
-        mScanResultTextView.setText(mParsedResult.getDisplayResult());
-        mResultFormatTextView.setText(mResultFormat);
-        mResultTypeTextView.setText(mResultType);
+        scanResultTextView.setText(mParsedResult.getDisplayResult());
+        resultFormatTextView.setText(mResultFormat);
+        resultTypeTextView.setText(mResultType);
 
         if (intent.getStringExtra("ImagePath") != null) {
-            mScanResultImageView.setVisibility(View.VISIBLE);
+            scanResultImageView.setVisibility(View.VISIBLE);
             Bitmap codeBitmap = BitmapFactory.decodeFile(intent.getStringExtra("ImagePath"));
-            mScanResultImageView.setImageBitmap(codeBitmap);
+            scanResultImageView.setImageBitmap(codeBitmap);
         } else {
-            mScanResultImageView.setVisibility(View.GONE);
+            scanResultImageView.setVisibility(View.GONE);
         }
     }
 
@@ -167,6 +169,8 @@ public class ScanResultActivity extends AppCompatActivity implements View.OnClic
                     Utils.openProductSearch(this, ((ProductParsedResult) mParsedResult).getNormalizedProductID());
                 } else if (mParsedResult instanceof ExpandedProductParsedResult) {
                     Utils.openProductSearch(this, ((ExpandedProductParsedResult) mParsedResult).getRawText());
+                } else {
+                    Utils.openProductSearch(this, ((ISBNParsedResult) mParsedResult).getISBN());
                 }
                 break;
             case R.id.share_button:
@@ -234,6 +238,14 @@ public class ScanResultActivity extends AppCompatActivity implements View.OnClic
                         calendarResult.getDescription(),
                         calendarResult.getAttendees());
                 break;
+            case R.id.connect_wifi_button:
+                WifiParsedResult wifiResult = (WifiParsedResult) mParsedResult;
+                wifiConnect(wifiResult);
+                break;
+            case R.id.show_map_button:
+                GeoParsedResult geoResult = (GeoParsedResult) mParsedResult;
+                Utils.openMap(this, geoResult.getGeoURI());
+                break;
         }
     }
 
@@ -242,16 +254,32 @@ public class ScanResultActivity extends AppCompatActivity implements View.OnClic
         intent.setAction(Intent.ACTION_SEND);
         intent.putExtra(Intent.EXTRA_TEXT, share);
         intent.setType("text/plain");
-        startActivity(Intent.createChooser(intent, "Share"));
+        startActivity(Intent.createChooser(intent, getResources().getString(R.string.share_button)));
     }
 
     private void setButtonsVisibility(Button button) {
-        for (Button b: mButtons) {
+        for (Button b : mButtons) {
             if (b.getId() == button.getId()) {
                 b.setVisibility(View.VISIBLE);
             } else {
                 b.setVisibility(View.GONE);
             }
         }
+    }
+
+    private void wifiConnect(WifiParsedResult result) {
+        WifiManager wifiManager =
+                (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        if (wifiManager == null) {
+            Log.w(TAG, "No WifiManager available from device");
+            return;
+        }
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplicationContext(), R.string.wifi_changing_network, Toast.LENGTH_SHORT).show();
+            }
+        });
+        new WifiConfigManager(wifiManager).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, result);
     }
 }

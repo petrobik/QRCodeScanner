@@ -146,8 +146,7 @@ public class Utils {
     }
 
     public static void openProductSearch(@NonNull Context context, String url) {
-        Uri uri = Uri.parse("http://www.google.com/m/products?q=" + url);
-        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com/m/products?q=" + url));
         if (intent.resolveActivity(context.getPackageManager()) != null) {
             context.startActivity(intent);
         }
@@ -196,7 +195,7 @@ public class Utils {
         return ResultParser.parseResult(result);
     }
 
-    public static void addContact(Context context, String[] names,
+    public static void addContact(@NonNull Context context, String[] names,
                              String[] nicknames,
                              String pronunciation,
                              String[] phoneNumbers,
@@ -319,7 +318,7 @@ public class Utils {
         }
     }
 
-    public static void addCalendarEvent(Context context,
+    public static void addCalendarEvent(@NonNull Context context,
                                         String summary,
                                         long start,
                                         boolean allDay,
@@ -349,6 +348,13 @@ public class Utils {
             intent.putExtra(Intent.EXTRA_EMAIL, attendees);
         }
 
+        if (intent.resolveActivity(context.getPackageManager()) != null) {
+            context.startActivity(intent);
+        }
+    }
+
+    public static void openMap(@NonNull Context context, String geoUri) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(geoUri));
         if (intent.resolveActivity(context.getPackageManager()) != null) {
             context.startActivity(intent);
         }

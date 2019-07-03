@@ -33,7 +33,7 @@ public class HistoryFragment extends Fragment {
 
     private CodeViewModel mCodeViewModel;
     private RecyclerView mRecyclerView;
-    private Snackbar mSnackbar;
+//    private Snackbar mSnackbar;
     private CodeAdapter mCodeAdapter;
 
 
@@ -82,9 +82,9 @@ public class HistoryFragment extends Fragment {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 mCodeViewModel.delete(mCodeAdapter.getCodeAt(viewHolder.getAdapterPosition()));
-                mSnackbar = Snackbar.make(getActivity().findViewById(R.id.main_layout), getResources().getString(R.string.item_deleted), Snackbar.LENGTH_SHORT);
-                mSnackbar.setAnchorView(getActivity().findViewById(R.id.fab));
-                mSnackbar.show();
+//                mSnackbar = Snackbar.make(getActivity().findViewById(R.id.main_layout), getResources().getString(R.string.item_deleted), Snackbar.LENGTH_SHORT);
+//                mSnackbar.setAnchorView(getActivity().findViewById(R.id.fab));
+//                mSnackbar.show();
             }
         }).attachToRecyclerView(mRecyclerView);
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,9 +7,12 @@
     tools:context=".ScanResultActivity">
 
     <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_alignParentTop="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="72dp">
+        android:layout_marginBottom="72dp"
+        android:layout_marginTop="8dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -97,6 +100,7 @@
     </ScrollView>
 
     <LinearLayout
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
@@ -111,7 +115,7 @@
             android:layout_width="0dp"
             android:layout_height="56dp"
             style="@style/AppTheme.Buttons"
-            android:text="Search product"
+            android:text="@string/product_search_button"
             android:layout_weight="1"
             android:visibility="gone" />
 
@@ -120,7 +124,7 @@
             android:layout_width="0dp"
             android:layout_height="56dp"
             style="@style/AppTheme.Buttons"
-            android:text="Open in browser"
+            android:text="@string/open_browser_button"
             android:layout_weight="1"
             android:visibility="gone" />
 
@@ -129,7 +133,7 @@
             android:layout_width="0dp"
             android:layout_height="56dp"
             style="@style/AppTheme.Buttons"
-            android:text="Send SMS"
+            android:text="@string/send_sms_button"
             android:layout_weight="1"
             android:visibility="gone" />
 
@@ -138,7 +142,7 @@
             android:layout_width="0dp"
             android:layout_height="56dp"
             style="@style/AppTheme.Buttons"
-            android:text="Search"
+            android:text="@string/search_button"
             android:layout_weight="1"
             android:visibility="gone" />
 
@@ -147,7 +151,7 @@
             android:layout_width="0dp"
             android:layout_height="56dp"
             style="@style/AppTheme.Buttons"
-            android:text="Dial number"
+            android:text="@string/dial_button"
             android:layout_weight="1"
             android:visibility="gone" />
 
@@ -156,7 +160,7 @@
             android:layout_width="0dp"
             android:layout_height="56dp"
             style="@style/AppTheme.Buttons"
-            android:text="Send email"
+            android:text="@string/send_email_button"
             android:layout_weight="1"
             android:visibility="gone" />
 
@@ -165,7 +169,7 @@
             android:layout_width="0dp"
             android:layout_height="56dp"
             style="@style/AppTheme.Buttons"
-            android:text="Add contact"
+            android:text="@string/add_contact_button"
             android:layout_weight="1"
             android:visibility="gone" />
 
@@ -174,7 +178,25 @@
             android:layout_width="0dp"
             android:layout_height="56dp"
             style="@style/AppTheme.Buttons"
-            android:text="Add to calendar"
+            android:text="@string/add_event_button"
+            android:layout_weight="1"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/connect_wifi_button"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            style="@style/AppTheme.Buttons"
+            android:text="@string/connect_wifi_button"
+            android:layout_weight="1"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/show_map_button"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            style="@style/AppTheme.Buttons"
+            android:text="@string/show_map_button"
             android:layout_weight="1"
             android:visibility="gone" />
 
@@ -184,9 +206,9 @@
             android:layout_height="56dp"
             android:layout_marginStart="8dp"
             style="@style/AppTheme.Buttons"
-            android:text="Share"
+            android:text="@string/share_button"
             android:layout_weight="1"/>
 
     </LinearLayout>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</RelativeLayout>
