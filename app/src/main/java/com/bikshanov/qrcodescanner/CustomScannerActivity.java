@@ -9,18 +9,18 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.journeyapps.barcodescanner.CaptureManager;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
 import com.journeyapps.barcodescanner.ViewfinderView;
 
-public class CustomScannerActivity extends AppCompatActivity {
+public class CustomScannerActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private CaptureManager mCapture;
     private DecoratedBarcodeView mBarcodeScannerView;
     private ViewfinderView mViewfinderView;
     private boolean flashOn = false;
-//    private MaterialButton switchFlashlightButton;
     private ImageButton switchFlashlightButton;
 
     public static final String KEY_AUTO_FOCUS = "key_auto_focus";
@@ -28,7 +28,6 @@ public class CustomScannerActivity extends AppCompatActivity {
     boolean useAutoFocus;
 
     SharedPreferences sharedPrefs;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +39,6 @@ public class CustomScannerActivity extends AppCompatActivity {
         useAutoFocus = sharedPrefs.getBoolean(KEY_AUTO_FOCUS, true);
 
         mBarcodeScannerView = findViewById(R.id.zxing_barcode_scanner);
-
-//        if (useAutoFocus) {
-//            mBarcodeScannerView.getBarcodeView().getCameraSettings().setAutoFocusEnabled(true);
-//        } else {
-//            mBarcodeScannerView.getBarcodeView().getCameraSettings().setAutoFocusEnabled(false);
-//        }
 
         mBarcodeScannerView.getBarcodeView().getCameraSettings().setAutoFocusEnabled(useAutoFocus);
 
@@ -73,12 +66,14 @@ public class CustomScannerActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         mCapture.onResume();
+        sharedPrefs.registerOnSharedPreferenceChangeListener(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         mCapture.onPause();
+        sharedPrefs.unregisterOnSharedPreferenceChangeListener(this);
     }
 
     @Override
@@ -106,24 +101,20 @@ public class CustomScannerActivity extends AppCompatActivity {
     public void switchFlashlight() {
         if (!flashOn) {
             mBarcodeScannerView.setTorchOn();
-//            switchFlashlightButton.setIcon(getResources().getDrawable(R.drawable.ic_flash_off));
             switchFlashlightButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_flash_off));
             flashOn = true;
         } else {
             mBarcodeScannerView.setTorchOff();
-//            switchFlashlightButton.setIcon(getResources().getDrawable(R.drawable.ic_flash_on));
             switchFlashlightButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_flash_on));
             flashOn = false;
         }
     }
 
-//    @Override
-//    public void onTorchOn() {
-//        switchFlashlightButton.setText(R.string.turn_off_flashlight);
-//    }
-//
-//    @Override
-//    public void onTorchOff() {
-//        switchFlashlightButton.setText(R.string.turn_on_flashlight);
-//    }
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key == KEY_AUTO_FOCUS) {
+            useAutoFocus = sharedPreferences.getBoolean(KEY_AUTO_FOCUS, true);
+            mBarcodeScannerView.getBarcodeView().getCameraSettings().setAutoFocusEnabled(useAutoFocus);
+        }
+    }
 }

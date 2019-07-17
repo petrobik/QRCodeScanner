@@ -8,14 +8,33 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CodeAdapter extends RecyclerView.Adapter<CodeAdapter.CodeHolder> {
+public class CodeAdapter extends ListAdapter<Code, CodeAdapter.CodeHolder> {
 
-    private List<Code> codes = new ArrayList<>();
+    public CodeAdapter() {
+        super(DIFF_CALLBACK);
+    }
+
+    private static final DiffUtil.ItemCallback<Code> DIFF_CALLBACK = new DiffUtil.ItemCallback<Code>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull Code oldItem, @NonNull Code newItem) {
+            return oldItem.getId() == newItem.getId();
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull Code oldItem, @NonNull Code newItem) {
+            return oldItem.getCode().equals(newItem.getCode()) &&
+                    oldItem.getFormat().equals(newItem.getFormat()) &&
+                    oldItem.getType().equals(newItem.getType()) &&
+                    oldItem.getDate().equals(newItem.getDate());
+        }
+    };
 
     @NonNull
     @Override
@@ -27,7 +46,7 @@ public class CodeAdapter extends RecyclerView.Adapter<CodeAdapter.CodeHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull CodeHolder holder, int position) {
-        Code currentCode = codes.get(position);
+        Code currentCode = getItem(position);
 //        holder.mCodeTextView.setText(currentCode.getCode());
         holder.mCodeTextView.setText(Utils.getParsedResult(currentCode.getCode(),
                 Utils.getBarcodeFormat(currentCode.getFormat())).getDisplayResult());
@@ -71,18 +90,8 @@ public class CodeAdapter extends RecyclerView.Adapter<CodeAdapter.CodeHolder> {
 //        holder.mDateTextView.setText(currentCode.getDate().toString());
     }
 
-    @Override
-    public int getItemCount() {
-        return codes.size();
-    }
-
-    public void setCodes(List<Code> codes) {
-        this.codes = codes;
-        notifyDataSetChanged();
-    }
-
     public Code getCodeAt(int position) {
-        return codes.get(position);
+        return getItem(position);
     }
 
     class CodeHolder extends RecyclerView.ViewHolder {
@@ -101,7 +110,7 @@ public class CodeAdapter extends RecyclerView.Adapter<CodeAdapter.CodeHolder> {
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    Code code = codes.get(position);
+                    Code code = getItem(position);
 
                     Intent intent = new Intent(v.getContext(), ScanResultActivity.class);
                     intent.putExtra("ScanResult", code.getCode());

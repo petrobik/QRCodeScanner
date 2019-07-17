@@ -13,4 +13,8 @@
         <item name="android:textAllCaps">false</item>
     </style>
 
+    <style name="AppTheme.AlertDialog" parent="Theme.MaterialComponents.Light.Dialog.Alert">
+        <item name="colorPrimary">@color/colorSecondary</item>
+    </style>
+
 </resources>

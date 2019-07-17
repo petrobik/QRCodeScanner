@@ -3,6 +3,12 @@ package com.bikshanov.qrcodescanner;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,15 +19,6 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
@@ -65,10 +62,7 @@ public class HistoryFragment extends Fragment {
             @Override
             public void onChanged(List<Code> codes) {
                 // update RecyclerView
-                mCodeAdapter.setCodes(codes);
-//                mSnackbar = Snackbar.make(findViewById(R.id.main_layout), "onChanged", Snackbar.LENGTH_SHORT);
-//                mSnackbar.setAnchorView(R.id.fab);
-//                mSnackbar.show();
+                mCodeAdapter.submitList(codes);
             }
         });
 
@@ -82,9 +76,6 @@ public class HistoryFragment extends Fragment {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 mCodeViewModel.delete(mCodeAdapter.getCodeAt(viewHolder.getAdapterPosition()));
-//                mSnackbar = Snackbar.make(getActivity().findViewById(R.id.main_layout), getResources().getString(R.string.item_deleted), Snackbar.LENGTH_SHORT);
-//                mSnackbar.setAnchorView(getActivity().findViewById(R.id.fab));
-//                mSnackbar.show();
             }
         }).attachToRecyclerView(mRecyclerView);
 
@@ -103,8 +94,7 @@ public class HistoryFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.clear_history:
                 if (mCodeAdapter.getItemCount() != 0) {
-                    new AlertDialog.Builder(getContext())
-                            .setTitle(getString(R.string.clear_history))
+                    new AlertDialog.Builder(getContext(), R.style.AppTheme_AlertDialog)
                             .setMessage(getString(R.string.clear_history_message))
                             .setPositiveButton(R.string.clear, new DialogInterface.OnClickListener() {
                                 @Override

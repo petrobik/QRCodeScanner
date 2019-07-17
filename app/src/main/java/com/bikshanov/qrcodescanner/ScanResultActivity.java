@@ -77,6 +77,7 @@ public class ScanResultActivity extends AppCompatActivity implements View.OnClic
         sendSmsButton.setOnClickListener(this);
         dialButton.setOnClickListener(this);
         sendEmailButton.setOnClickListener(this);
+        addContactButton.setOnClickListener(this);
         addEventButton.setOnClickListener(this);
         connectWifiButton.setOnClickListener(this);
         showMapButton.setOnClickListener(this);

@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -59,15 +58,9 @@ public class Main2Activity extends AppCompatActivity implements SharedPreference
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.navigation_history:
-//                        mSnackbar = Snackbar.make(findViewById(R.id.main_layout), item.getTitle().toString() + " checked", Snackbar.LENGTH_SHORT);
-//                        mSnackbar.setAnchorView(R.id.fab);
-//                        mSnackbar.show();
                         loadFragment(new HistoryFragment());
                         return true;
                     case R.id.navigation_settings:
-//                        mSnackbar = Snackbar.make(findViewById(R.id.main_layout), item.getTitle().toString() + " checked", Snackbar.LENGTH_SHORT);
-//                        mSnackbar.setAnchorView(R.id.fab);
-//                        mSnackbar.show();
                         loadFragment(new SettingsFragment());
                         return true;
                 }
@@ -81,11 +74,6 @@ public class Main2Activity extends AppCompatActivity implements SharedPreference
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                IntentIntegrator integrator = new IntentIntegrator(Main2Activity.this);
-//                integrator.setBarcodeImageEnabled(true);
-//                integrator.setOrientationLocked(false);
-//                integrator.initiateScan();
-
                 new IntentIntegrator(Main2Activity.this)
                         .setOrientationLocked(false)
                         .setBarcodeImageEnabled(true)
@@ -104,36 +92,22 @@ public class Main2Activity extends AppCompatActivity implements SharedPreference
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (result != null) {
-            if (result.getContents() == null) {
-                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
-            } else {
+            if (result.getContents() != null) {
 
                 BarcodeFormat barcodeFormat = Utils.getBarcodeFormat(result.getFormatName());
 
                 Result res = new Result(result.getContents(), null, null, barcodeFormat);
                 ParsedResult parsedResult = ResultParser.parseResult(res);
-//                mResultTextView.setText(result.getContents());
-//                String scanResult = parsedResult.getDisplayResult();
                 String scanResult = result.getContents();
                 String imagePath = result.getBarcodeImagePath();
                 String format = result.getFormatName();
                 String type = parsedResult.getType().toString();
-//                mResultTextView.setText(parsedResult.getDisplayResult());
-//                mTypeTextView.setText(parsedResult.getType().toString());
-//                Bitmap codeBitmap = BitmapFactory.decodeFile(result.getBarcodeImagePath());
-//                mCodeImageView.setImageBitmap(codeBitmap);
 
                 Intent intent = new Intent(Main2Activity.this, ScanResultActivity.class);
                 intent.putExtra("ScanResult", scanResult);
                 intent.putExtra("ImagePath", imagePath);
                 intent.putExtra("Format", format);
                 intent.putExtra("Type", type);
-
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
-//                } else {
-//                    startActivity(intent);
-//                }
 
                 Code code = new Code(scanResult, format, type);
                 mCodeViewModel.insert(code);
@@ -147,7 +121,6 @@ public class Main2Activity extends AppCompatActivity implements SharedPreference
                 }
 
                 startActivity(intent);
-
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
